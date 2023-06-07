@@ -93,7 +93,7 @@ const Registration = () => {
             />
           </div>
           <div className="form-group mt-3">
-            <label>FName</label>
+            <label>LName</label>
             <input
               type="text"
               className="form-control mt-1"
@@ -125,7 +125,7 @@ const Registration = () => {
                 checked={roleID === "2"} 
                 onChange={(e) => setRole(e.target.value)} 
               />
-              Customer 
+              Participant
             </label> 
           </div> 
         </div> 

@@ -40,17 +40,19 @@ function Result(){
             timeTaken: 0,
             selectedOptions: []
         });
-        navigate("/quiz"); // Update the route as needed
+        navigate("/quiz")// Update the route as needed
     };
     
 
     const submitScore = () => {
+      const {userId} = context;
+      const updatedData ={
+        userId: userId,
+        score: score,
+        timeTaken: context.timeTaken
+      };
         createAPIEndpoint(ENDPOINTS.user)
-            .put(context.userId, {
-                userId: context.userId,
-                score: score,
-                timeTaken: context.timeTaken
-            })
+            .put(userId,updatedData) 
             .then(res => {
                 setShowAlert(true);
                 setTimeout(() => {

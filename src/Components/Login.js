@@ -36,6 +36,8 @@ export default function Login() {
       axios
         .post('http://localhost:5180/api/User/login', values)
         .then((res) => {
+          const userId = res.data.userId;
+          localStorage.setItem('userId', userId)
           console.log(res);
           // Handle the response as needed
           // Redirect to another page or perform any other actions
