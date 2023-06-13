@@ -4,7 +4,7 @@ import { Box } from '@mui/system';
 import Center from './Center';
 import useForm from '../hooks/useForm';
 import axios from 'axios';
-import { useNavigate,Link } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 const getFreshModel = () => ({
   email: '',
@@ -12,8 +12,7 @@ const getFreshModel = () => ({
 });
 
 export default function Login() {
-
-  const navigate=useNavigate();
+  const navigate = useNavigate();
 
   const {
     values,
@@ -36,14 +35,24 @@ export default function Login() {
       axios
         .post('http://localhost:5180/api/User/login', values)
         .then((res) => {
-          const userId = res.data.userId;
-          localStorage.setItem('userId', userId)
-          console.log(res);
-          // Handle the response as needed
-          // Redirect to another page or perform any other actions
-          navigate('/quiz');
+          const { token, role } = res.data;
+
+          // Store the token, expiration, and role ID in local storage
+          localStorage.setItem('token', token);
+          //localStorage.setItem('expirationMinutes', expirationMinutes);
+          localStorage.setItem('role', role);
+
+          // Redirect based on role ID
+          if (role === 1) {
+            navigate('/admin');
+          } else if (role === 2) {
+            navigate('/quiz');
+          } else {
+            // Handle unknown role ID
+            navigate('/login'); // Redirect to login page
+          }
         })
-        .catch((err) => console.log(err));
+        .catch((err) => console.log('Login failed', err));
     }
   };
 
@@ -52,11 +61,50 @@ export default function Login() {
     temp.email = /\S+@\S+\.\S+/.test(values.email)
       ? ''
       : 'Email is not valid.';
-    temp.password =
-      values.password !== '' ? '' : 'This field is required.';
+    temp.password = values.password !== '' ? '' : 'This field is required.';
     setErrors(temp);
     return Object.values(temp).every((x) => x === '');
   };
+
+  // const checkTokenExpiration = () => {
+  //   const expirationMinutes = localStorage.getItem('expirationMinutes');
+
+  //   if (expirationMinutes) {
+  //     const now = new Date();
+  //     const expirationDate = new Date(expirationMinutes);
+
+  //     if (now > expirationDate) {
+  //       // Token has expired, perform logout or refresh token logic
+  //       // ...
+  //       // For example, you can clear the token, expiration, and role ID from local storage
+  //       localStorage.removeItem('token');
+  //       localStorage.removeItem('expirationMinutes');
+  //       localStorage.removeItem('role');
+  //       navigate('/'); // Redirect to login page
+  //     } else {
+  //       // Token is still valid
+  //       const role = localStorage.getItem('role');
+
+  //       // Redirect based on role ID
+  //       if (role === '1') {
+  //         navigate('/admin');
+  //       } else if (role === '2') {
+  //         navigate('/quiz');
+  //       } else {
+  //         // Handle unknown role ID
+  //         navigate('/'); // Redirect to login page
+  //       }
+  //     }
+  //   } else {
+  //     // No token or expiration found, user is not logged in
+  //     navigate('/'); // Redirect to login page
+  //   }
+  // };
+
+  // // Check token expiration on component mount
+  // useEffect(() => {
+  //   checkTokenExpiration();
+  // }, []);
 
   return (
     <Center>
@@ -98,12 +146,13 @@ export default function Login() {
                 variant="contained"
                 size="large"
                 sx={{ width: '90%' }}
-                onClick={login}
               >
                 Start
               </Button>
               <div>
-                <p>not a member ,Signup  <Link to="/register">Register</Link></p>
+                <p>
+                  not a member, Signup <Link to="/register">Register</Link>
+                </p>
               </div>
             </form>
           </Box>

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-
+import './Login.css';
 import axios from "axios";
 
 const Registration = () => {
@@ -16,12 +16,12 @@ const Registration = () => {
     try { 
       // Prepare the data to be sent in the request body  
       const userData = {   
-        name: name,   
+        userName: name,   
         email: email,
         password:password, 
-        FName: FName, 
-        LName: LName,
-        roleID:roleID,
+        fName: FName, 
+        lName: LName,
+        userRoleID:roleID,
       }; 
       // Make the POST request using Axios   
       const response = await axios.post("http://localhost:5180/api/User/Registration", userData); 

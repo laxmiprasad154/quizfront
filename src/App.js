@@ -6,9 +6,11 @@ import Result from './Components/Result';
 import Layout from './Components/Layout';
 import Authenticate from './Components/Authenticate';
 import Registration from './Components/Registration';
+import AdminPage from './Components/AdminPage';
 
 function App() {
   return (
+    
     <BrowserRouter>
     <Routes>
       <Route path='/' element={<Login/>}/>
@@ -17,10 +19,13 @@ function App() {
       <Route path='/quiz' element={<Quiz/>}/> 
       <Route path='/result' element={<Result/>}/>
       <Route path='/register' element={<Registration/>}/>
+      <Route path='/admin' element={<AdminPage/>}/>
       </Route>
       </Route>
     </Routes>
     </BrowserRouter>
+    
+    
   );
 }
 

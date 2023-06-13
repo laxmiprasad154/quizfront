@@ -26,7 +26,7 @@ export default function Quiz() {
             timeTaken: 0,
             selectedOptions: []
         })
-        createAPIEndpoint(ENDPOINTS.question)
+        createAPIEndpoint(ENDPOINTS.randomQuestions)
             .fetch() 
             .then(res => {
                 setQns(res.data)
