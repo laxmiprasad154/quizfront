@@ -41,6 +41,7 @@ const Registration = () => {
   };
 
   return (
+    <>
     <div className="Auth-form-container">
       <form className="Auth-form" onSubmit={handleSubmit}>
         <div className="Auth-form-content">
@@ -141,6 +142,7 @@ const Registration = () => {
         </div>
       </form>
     </div>
+    </>
   );
 };
 

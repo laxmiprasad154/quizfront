@@ -14,11 +14,11 @@ function App() {
     <BrowserRouter>
     <Routes>
       <Route path='/' element={<Login/>}/>
+      <Route path='/register' element={<Registration/>}/>
       <Route path='' element={<Authenticate/>}>
       <Route path='/' element={<Layout/>}>
       <Route path='/quiz' element={<Quiz/>}/> 
       <Route path='/result' element={<Result/>}/>
-      <Route path='/register' element={<Registration/>}/>
       <Route path='/admin' element={<AdminPage/>}/>
       </Route>
       </Route>

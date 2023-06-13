@@ -35,6 +35,8 @@ export default function Login() {
       axios
         .post('http://localhost:5180/api/User/login', values)
         .then((res) => {
+          const userId = res.data.userId;
+          localStorage.setItem('userId', userId);
           const { token, role } = res.data;
 
           // Store the token, expiration, and role ID in local storage
